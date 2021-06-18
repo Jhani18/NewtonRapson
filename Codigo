@@ -1,0 +1,64 @@
+clc;
+#METODO DE NEWTON RAPSHON
+#Limpia la pantalla en cada ejecución
+
+#Se introduce la función como string
+#inline define funciones
+f = inline('7*e^(x)*sin(x)-1');
+
+#Otra forma de definir una función con la derivada
+d='(7*e^(x)*(sin(x)+cos(x)))';
+d = inline(d);
+
+#Variable xi el punto
+xi=0.0;
+
+#Que se ejecute el método hasta que el error sea menor a 0.1
+error=0.1;
+
+#Numero de interacciones que inicia en 1
+i=1;
+
+#Funcion que retorna el error aproximado
+function ea = errora(xa, xp)
+    ea = abs(((xa - xp)/xa)*100);
+end
+
+#Condición de, si al pasar la derivada por el punto i da=0 no se puede encontrar la raíz
+if d(xi) == 0
+     fprintf ('No se puede hallar una raiz');
+
+     else
+          
+          xn= xi-(f(xi)/d(xi));
+#Se le da un estilo para que muestre los valores en cada interacción
+          fprintf ("____________________________________________\n");
+          fprintf("%s\t\t %s\t\t  %s\n",'I','XN','|EA|  ');
+          fprintf ("____________________________________________\n");
+
+#Ciclo while para que se ejecute hasta el error menor a 0.1
+
+          while errora(xn, xi) > erro
+
+                fprintf('%.0f\t\t',i);
+                fprintf('%.8f\t',xn);
+                fprintf('%.8f\t',errora(xn,xi));
+                fprintf ("\n");
+                
+		xi=xn;
+                xn= xi-(f(xi)/d(xi));
+                #Incrementa el contador
+		i++;
+
+          endwhile 
+          
+		#Muestra los valores
+                fprintf('%.0f\t\t',i);
+                fprintf('%.8f\t',xn);
+                fprintf('%.8f\t',errora(xn, xi));
+                fprintf ("\n");
+              
+                fprintf ("____________________________________________\n");
+                fprintf('\nLA RAIZ APROXIMADA ES:  %.8f\n', xn);
+            
+endif
